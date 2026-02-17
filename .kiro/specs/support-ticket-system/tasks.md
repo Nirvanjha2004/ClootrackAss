@@ -324,8 +324,8 @@ This implementation plan breaks down the Support Ticket System into discrete, in
     - Test backend can reach database
     - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5, 10.7_
 
-- [ ] 17. Create README.md with setup instructions
-  - [ ] 17.1 Document setup and running instructions
+- [x] 17. Create README.md with setup instructions
+  - [x] 17.1 Document setup and running instructions
     - Explain docker-compose up --build command
     - Document environment variables needed
     - Explain how to set OPENAI_API_KEY
@@ -333,7 +333,7 @@ This implementation plan breaks down the Support Ticket System into discrete, in
     - Include design decisions and architecture overview
     - _Requirements: 10.7_
   
-  - [ ] 17.2 Document API endpoints
+  - [x] 17.2 Document API endpoints
     - List all endpoints with examples
     - Document request/response formats
     - _Requirements: 2.1, 3.1, 4.1, 5.1, 6.1_
