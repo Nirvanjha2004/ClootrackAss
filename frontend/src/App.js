@@ -7,9 +7,8 @@ import StatsPanel from './components/StatsPanel';
 function App() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  const handleTicketCreated = (ticket) => {
-    console.log('Ticket created:', ticket);
-    // Trigger refresh of ticket list and stats
+  const handleTicketCreated = () => {
+    // Trigger refresh of ticket list and stats when a new ticket is created
     setRefreshTrigger(prev => prev + 1);
   };
 

@@ -43,8 +43,7 @@ const TicketForm = ({ onTicketCreated }) => {
         setPriority(response.data.suggested_priority);
       }
     } catch (err) {
-      // Silently fail - user can still manually select
-      console.log('Classification unavailable:', err.message);
+      // Silently fail - user can still manually select category and priority
     } finally {
       setIsClassifying(false);
     }

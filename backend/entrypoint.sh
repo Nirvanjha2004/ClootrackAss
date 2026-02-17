@@ -5,6 +5,15 @@ set -e
 
 echo "Waiting for PostgreSQL to be ready..."
 
+# Parse DATABASE_URL if individual variables are not set
+if [ -z "$POSTGRES_HOST" ] && [ -n "$DATABASE_URL" ]; then
+  # Extract from DATABASE_URL format: postgresql://user:password@host:port/dbname
+  export POSTGRES_USER=$(echo $DATABASE_URL | sed -n 's/.*:\/\/\([^:]*\):.*/\1/p')
+  export POSTGRES_PASSWORD=$(echo $DATABASE_URL | sed -n 's/.*:\/\/[^:]*:\([^@]*\)@.*/\1/p')
+  export POSTGRES_HOST=$(echo $DATABASE_URL | sed -n 's/.*@\([^:]*\):.*/\1/p')
+  export POSTGRES_DB=$(echo $DATABASE_URL | sed -n 's/.*\/\([^?]*\).*/\1/p')
+fi
+
 # Wait for database to be ready
 until PGPASSWORD=$POSTGRES_PASSWORD psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c '\q' 2>/dev/null; do
   echo "PostgreSQL is unavailable - sleeping"

@@ -14,14 +14,18 @@ class LLMClassifier:
     """
     
     def __init__(self):
-        """Initialize with API key from environment variable."""
+        """
+        Initialize with API key from environment variable.
+        If OPENAI_API_KEY is not set or invalid, client will be None
+        and classify_ticket will return None (graceful degradation).
+        """
         self.api_key = os.environ.get('OPENAI_API_KEY')
         self.client = None
         if self.api_key:
             try:
                 self.client = OpenAI(api_key=self.api_key)
             except Exception as e:
-                # Handle OpenAI client initialization errors
+                # Log error but don't fail - allows system to work without LLM
                 print(f"OpenAI client initialization error: {e}")
                 self.client = None
     
@@ -68,10 +72,10 @@ Respond in JSON format:
                 'suggested_priority': result['priority']
             }
         except json.JSONDecodeError as e:
-            # Handle JSON parsing errors
+            # Log JSON parsing errors - LLM may have returned invalid format
             print(f"LLM classification JSON parsing error: {e}")
             return None
         except Exception as e:
-            # Handle network errors and other exceptions
+            # Log network errors and other exceptions - allows graceful degradation
             print(f"LLM classification error: {e}")
             return None

@@ -1,3 +1,12 @@
 from django.contrib import admin
+from .models import Ticket
 
-# Register your models here.
+
+@admin.register(Ticket)
+class TicketAdmin(admin.ModelAdmin):
+    """Admin interface for Ticket model."""
+    list_display = ['id', 'title', 'category', 'priority', 'status', 'created_at']
+    list_filter = ['category', 'priority', 'status', 'created_at']
+    search_fields = ['title', 'description']
+    readonly_fields = ['created_at']
+    ordering = ['-created_at']
